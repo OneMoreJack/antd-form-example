@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PageWrapper } from "./style";
-import FormExample from "./FormExample";
+import FormExample from "./example";
 
 function App() {
   const [formData, setFormData] = useState<Record<string, any>>({});

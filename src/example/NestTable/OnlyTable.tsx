@@ -1,26 +1,24 @@
-import {
-  Button,
-  Form,
-  FormListFieldData,
-  FormListOperation,
-  Input,
-  InputNumber,
-  Space,
-} from "antd";
-import { ColumnProps } from "antd/es/table";
+import { Button, Form, FormInstance, Input, InputNumber, Space } from "antd";
+import Table, { ColumnProps } from "antd/es/table";
+import React from "react";
 
-export default function useColumns() {
-  const columns: ColumnProps<{
-    field: FormListFieldData;
-    operation: FormListOperation;
-  }>[] = [
+const LIST_NAME = "users";
+
+type OnlyTableProps = {
+  formInstance: FormInstance<any>;
+};
+
+const OnlyTable: React.FC<OnlyTableProps> = (props) => {
+  const { formInstance } = props;
+
+  const columns: ColumnProps<any>[] = [
     {
       title: "Name",
       dataIndex: "name",
-      render(value, record, index) {
+      render(value, records, index) {
         return (
           <Form.Item
-            name={[index, "name"]}
+            name={[LIST_NAME, index, "name"]}
             rules={[{ required: true, message: "required" }]}>
             <Input />
           </Form.Item>
@@ -30,10 +28,10 @@ export default function useColumns() {
     {
       title: "Age",
       dataIndex: "age",
-      render(value, record, index) {
+      render(value, records, index) {
         return (
           <Form.Item
-            name={[index, "age"]}
+            name={[LIST_NAME, index, "age"]}
             rules={[{ required: true, message: "required" }]}>
             <InputNumber />
           </Form.Item>
@@ -43,9 +41,9 @@ export default function useColumns() {
     {
       title: "Address",
       dataIndex: "address",
-      render(value, record, index) {
+      render(value, records, index) {
         return (
-          <Form.Item name={[index, "address"]}>
+          <Form.Item name={[LIST_NAME, index, "address"]}>
             <Input />
           </Form.Item>
         );
@@ -75,7 +73,22 @@ export default function useColumns() {
     },
   ];
 
-  return {
-    columns,
-  };
-}
+  return (
+    <Form.Item label="Users" tooltip={"只通过Table实现"} shouldUpdate>
+      {() => {
+        const dataSource = formInstance.getFieldValue(LIST_NAME);
+        return (
+          <Table
+            size="small"
+            rowKey={(row) => row.name}
+            dataSource={dataSource || []}
+            columns={columns}
+            pagination={false}
+          />
+        );
+      }}
+    </Form.Item>
+  );
+};
+
+export default OnlyTable;
