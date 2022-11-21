@@ -1,8 +1,19 @@
-import { Button, Form, Input, InputNumber, Space } from "antd";
+import {
+  Button,
+  Form,
+  FormListFieldData,
+  FormListOperation,
+  Input,
+  InputNumber,
+  Space,
+} from "antd";
 import { ColumnProps } from "antd/es/table";
 
 export default function useColumns() {
-  const columns: ColumnProps<any>[] = [
+  const columns: ColumnProps<{
+    field: FormListFieldData;
+    operation: FormListOperation;
+  }>[] = [
     {
       title: "Name",
       dataIndex: "name",
@@ -43,19 +54,19 @@ export default function useColumns() {
     {
       title: "Action",
       dataIndex: "action",
-      render(value, { operations }, index) {
+      render(value, { operation }, index) {
         return (
           <Space>
             <Button
               type="primary"
               shape="circle"
-              onClick={() => operations.add()}>
+              onClick={() => operation.add()}>
               +
             </Button>
             <Button
               danger
               shape="circle"
-              onClick={() => operations.remove(index)}>
+              onClick={() => operation.remove(index)}>
               -
             </Button>
           </Space>

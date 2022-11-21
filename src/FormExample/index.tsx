@@ -46,16 +46,16 @@ const FormExample: React.FC<FormExampleProps> = (props) => {
 
       <Form.Item label="Friends">
         <Form.List name="users">
-          {(fields, operations) => {
+          {(fields, operation) => {
             const dataSources = fields.map((field) => ({
               field,
-              operations,
+              operation,
             }));
             return (
               <ConfigProvider
                 renderEmpty={() => (
                   <Empty>
-                    <Button type="primary" onClick={() => operations.add()}>
+                    <Button type="primary" onClick={() => operation.add()}>
                       Add
                     </Button>
                   </Empty>
