@@ -9,9 +9,7 @@ import DemoContainer from "../../components/DemoContainer";
 
 const LIST_NAME = "users";
 
-type OnlyTableProps = {};
-
-const OnlyTable: React.FC<OnlyTableProps> = (props) => {
+const NestTable: React.FC = () => {
   const [form] = Form.useForm();
 
   const [formData, setFormData] = useState<Record<string, any>>({});
@@ -91,7 +89,7 @@ const OnlyTable: React.FC<OnlyTableProps> = (props) => {
   ];
 
   return (
-    <DemoContainer formData={formData} title="表单嵌套表格(Table 和 form 实例结合)">
+    <DemoContainer formData={formData} title="表单嵌套表格(namePath)">
       <Form
         form={form}
         layout="vertical"
@@ -127,4 +125,4 @@ const OnlyTable: React.FC<OnlyTableProps> = (props) => {
   );
 };
 
-export default OnlyTable;
+export default NestTable;

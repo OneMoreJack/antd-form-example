@@ -65,11 +65,11 @@ const FormListAndTable: React.FC = () => {
     {
       title: "Action",
       dataIndex: "action",
-      render(value, { operation }, index) {
+      render(value, { operation, field }) {
         return (
           <Space>
             <Button
-              type="primary"
+              type="primary" 
               shape="circle"
               onClick={() => operation.add()}>
               +
@@ -77,7 +77,7 @@ const FormListAndTable: React.FC = () => {
             <Button
               danger
               shape="circle"
-              onClick={() => operation.remove(index)}>
+              onClick={() => operation.remove(field.name)}>
               -
             </Button>
           </Space>
@@ -93,7 +93,7 @@ const FormListAndTable: React.FC = () => {
   };
 
   return (
-    <DemoContainer formData={formData} title="表单嵌套表格(Form.List 和 Table 结合实现)">
+    <DemoContainer formData={formData} title="表单嵌套表格(Form.List)">
       <Form
         layout="vertical"
         onFinish={onFinish}
@@ -107,6 +107,7 @@ const FormListAndTable: React.FC = () => {
                 field,
                 operation,
               }));
+              console.log('dataSources', dataSources);
               return (
                 <ConfigProvider
                   renderEmpty={() => (

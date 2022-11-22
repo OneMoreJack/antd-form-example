@@ -1,9 +1,9 @@
 import FormListAndTable from "./FormListAndTable";
-import OnlyTable from "./OnlyTable";
+import NamePath from "./NamePath";
 
 const NestTable = {
   FormListAndTable,
-  OnlyTable,
+  NamePath,
 }
 
 export default NestTable;

@@ -11,7 +11,7 @@ const FormExample: React.FC<FormExampleProps> = (props) => {
   return (
     <>
       <NestTable.FormListAndTable />
-      <NestTable.OnlyTable />
+      <NestTable.NamePath />
     </>
   );
 };
