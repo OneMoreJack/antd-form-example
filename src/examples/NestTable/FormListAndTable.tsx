@@ -1,8 +1,8 @@
 /**
- * @file `FormList` 和 `Table` 结合实现 
+ * @file `FormList` 和 `Table` 结合实现
  */
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   ConfigProvider,
@@ -14,9 +14,11 @@ import {
   Space,
   type FormListFieldData,
   type FormListOperation,
+  FormProps,
 } from "antd";
 
 import { type ColumnProps } from "antd/es/table";
+import DemoContainer from "../../components/DemoContainer";
 
 const FormListAndTable: React.FC = () => {
   const columns: ColumnProps<{
@@ -84,36 +86,60 @@ const FormListAndTable: React.FC = () => {
     },
   ];
 
+  const [formData, setFormData] = useState<Record<string, any>>({});
+  const onFinish: FormProps<FormData>["onFinish"] = (values) => {
+    console.log(values);
+    setFormData(values);
+  };
+
   return (
-    <Form.Item label="Friends" tooltip={"Form.List 和 Table 结合实现"}>
-      <Form.List name="friends">
-        {(fields, operation) => {
-          const dataSources = fields.map((field) => ({
-            field,
-            operation,
-          }));
-          return (
-            <ConfigProvider
-              renderEmpty={() => (
-                <Empty description={false}>
-                  <Button type="primary" ghost onClick={() => operation.add()}>
-                    Add
-                  </Button>
-                </Empty>
-              )}>
-              <Table
-                size="small"
-                bordered
-                rowKey={(row) => row.field.key}
-                dataSource={dataSources}
-                columns={columns}
-                pagination={false}
-              />
-            </ConfigProvider>
-          );
-        }}
-      </Form.List>
-    </Form.Item>
+    <DemoContainer formData={formData} title="表单嵌套表格(Form.List 和 Table 结合实现)">
+      <Form
+        layout="vertical"
+        onFinish={onFinish}
+        initialValues={{
+          users: [{ name: "hello" }, { name: "world" }],
+        }}>
+        <Form.Item label="Users">
+          <Form.List name="users">
+            {(fields, operation) => {
+              const dataSources = fields.map((field) => ({
+                field,
+                operation,
+              }));
+              return (
+                <ConfigProvider
+                  renderEmpty={() => (
+                    <Empty description={false}>
+                      <Button
+                        type="primary"
+                        ghost
+                        onClick={() => operation.add()}>
+                        Add
+                      </Button>
+                    </Empty>
+                  )}>
+                  <Table
+                    size="small"
+                    bordered
+                    rowKey={(row) => row.field.key}
+                    dataSource={dataSources}
+                    columns={columns}
+                    pagination={false}
+                  />
+                </ConfigProvider>
+              );
+            }}
+          </Form.List>
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </DemoContainer>
   );
 };
 

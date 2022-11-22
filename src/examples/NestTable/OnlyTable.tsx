@@ -2,30 +2,35 @@
  * @file 仅使用 `Table` 的实现
  */
 
-import { Button, Form, FormInstance, Input, InputNumber, Space } from "antd";
+import { Button, Form, FormProps, Input, InputNumber, Space } from "antd";
 import Table, { ColumnProps } from "antd/es/table";
-import React from "react";
+import React, { useState } from "react";
+import DemoContainer from "../../components/DemoContainer";
 
 const LIST_NAME = "users";
 
-type OnlyTableProps = {
-  formInstance: FormInstance<any>;
-};
+type OnlyTableProps = {};
 
 const OnlyTable: React.FC<OnlyTableProps> = (props) => {
-  const { formInstance } = props;
+  const [form] = Form.useForm();
+
+  const [formData, setFormData] = useState<Record<string, any>>({});
+  const onFinish: FormProps<FormData>["onFinish"] = (values) => {
+    console.log(values);
+    setFormData(values);
+  };
 
   const handleAdd = () => {
-    formInstance.setFieldsValue({
-      [LIST_NAME]: [...formInstance.getFieldValue(LIST_NAME), {}],
+    form.setFieldsValue({
+      [LIST_NAME]: [...form.getFieldValue(LIST_NAME), {}],
     });
   };
 
   const handleDelete = (index: number) => {
-    const list = formInstance.getFieldValue(LIST_NAME);
+    const list = form.getFieldValue(LIST_NAME);
     list.splice(index, 1);
-    formInstance.setFieldsValue({
-      [LIST_NAME]: list,
+    form.setFieldsValue({
+      [LIST_NAME]: [...list],
     });
   };
 
@@ -73,16 +78,10 @@ const OnlyTable: React.FC<OnlyTableProps> = (props) => {
       render(value, record, index) {
         return (
           <Space>
-            <Button
-              type="primary"
-              shape="circle"
-              onClick={() => handleAdd()}>
+            <Button type="primary" shape="circle" onClick={() => handleAdd()}>
               +
             </Button>
-            <Button
-              danger
-              shape="circle"
-              onClick={() => handleDelete(index)}>
+            <Button danger shape="circle" onClick={() => handleDelete(index)}>
               -
             </Button>
           </Space>
@@ -92,21 +91,39 @@ const OnlyTable: React.FC<OnlyTableProps> = (props) => {
   ];
 
   return (
-    <Form.Item label="Users" tooltip={"只通过Table实现"} shouldUpdate>
-      {() => {
-        const dataSource = formInstance.getFieldValue(LIST_NAME);
-        return (
-          <Table
-            size="small"
-            bordered
-            rowKey={(row) => row.name}
-            dataSource={dataSource || []}
-            columns={columns}
-            pagination={false}
-          />
-        );
-      }}
-    </Form.Item>
+    <DemoContainer formData={formData} title="表单嵌套表格(Table 和 form 实例结合)">
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={onFinish}
+        initialValues={{
+          [LIST_NAME]: [{ name: "hello" }, { name: "world" }],
+        }}>
+        <Form.Item 
+          label="Users" 
+          tooltip={"只通过Table实现"} 
+          shouldUpdate>
+          {() => {
+            const dataSource = form.getFieldValue(LIST_NAME);
+            return (
+              <Table
+                size="small"
+                bordered
+                rowKey={(row) => row.name}
+                dataSource={dataSource || []}
+                columns={columns}
+                pagination={false}
+              />
+            );
+          }}
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </DemoContainer>
   );
 };
 

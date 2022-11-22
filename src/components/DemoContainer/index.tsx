@@ -12,8 +12,8 @@ const DemoContainer: React.FC<DemoContainerProps> = (props) => {
 
   return (
     <>
-      <Divider>
-        <h1>{title}</h1>
+      <Divider orientation='left'>
+        <h2>{title}</h2>
       </Divider>
       <DemoWrapper>
         <div className="form-wrapper shadow">

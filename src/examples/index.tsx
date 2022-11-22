@@ -10,7 +10,8 @@ type FormExampleProps = {
 const FormExample: React.FC<FormExampleProps> = (props) => {
   return (
     <>
-      <NestTable />
+      <NestTable.FormListAndTable />
+      <NestTable.OnlyTable />
     </>
   );
 };
