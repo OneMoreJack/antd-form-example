@@ -1,23 +1,11 @@
-import React, { useState } from "react";
-import { PageWrapper } from "./style";
-import FormExample from "./example";
+import React from "react";
+import FormExample from "./examples";
 
 function App() {
-  const [formData, setFormData] = useState<Record<string, any>>({});
-  const onValuesChange = (formData: any) => {
-    setFormData(formData);
-  };
   return (
-    <PageWrapper>
-      <div className="form-wrapper shadow">
-        <FormExample onValuesChange={onValuesChange} />
-      </div>
-      <div className="code-wrapper shadow">
-        <pre>
-          {JSON.stringify(formData, null, 2)}
-        </pre>
-      </div>
-    </PageWrapper>
+    <>
+      <FormExample />
+    </>
   );
 }
 

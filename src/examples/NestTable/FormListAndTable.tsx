@@ -1,3 +1,7 @@
+/**
+ * @file `FormList` 和 `Table` 结合实现 
+ */
+
 import React from "react";
 import {
   Button,
@@ -99,6 +103,7 @@ const FormListAndTable: React.FC = () => {
               )}>
               <Table
                 size="small"
+                bordered
                 rowKey={(row) => row.field.key}
                 dataSource={dataSources}
                 columns={columns}

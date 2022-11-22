@@ -1,3 +1,7 @@
+/**
+ * @file 仅使用 `Table` 的实现
+ */
+
 import { Button, Form, FormInstance, Input, InputNumber, Space } from "antd";
 import Table, { ColumnProps } from "antd/es/table";
 import React from "react";
@@ -10,6 +14,20 @@ type OnlyTableProps = {
 
 const OnlyTable: React.FC<OnlyTableProps> = (props) => {
   const { formInstance } = props;
+
+  const handleAdd = () => {
+    formInstance.setFieldsValue({
+      [LIST_NAME]: [...formInstance.getFieldValue(LIST_NAME), {}],
+    });
+  };
+
+  const handleDelete = (index: number) => {
+    const list = formInstance.getFieldValue(LIST_NAME);
+    list.splice(index, 1);
+    formInstance.setFieldsValue({
+      [LIST_NAME]: list,
+    });
+  };
 
   const columns: ColumnProps<any>[] = [
     {
@@ -52,19 +70,19 @@ const OnlyTable: React.FC<OnlyTableProps> = (props) => {
     {
       title: "Action",
       dataIndex: "action",
-      render(value, { operation }, index) {
+      render(value, record, index) {
         return (
           <Space>
             <Button
               type="primary"
               shape="circle"
-              onClick={() => operation.add()}>
+              onClick={() => handleAdd()}>
               +
             </Button>
             <Button
               danger
               shape="circle"
-              onClick={() => operation.remove(index)}>
+              onClick={() => handleDelete(index)}>
               -
             </Button>
           </Space>
@@ -80,6 +98,7 @@ const OnlyTable: React.FC<OnlyTableProps> = (props) => {
         return (
           <Table
             size="small"
+            bordered
             rowKey={(row) => row.name}
             dataSource={dataSource || []}
             columns={columns}

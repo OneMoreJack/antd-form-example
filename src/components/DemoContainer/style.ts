@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export const PageWrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
+export const DemoWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: stretch;
+  gap: 10px;
+  padding: 0 20px;
 
   .shadow {
     box-shadow:
@@ -18,10 +18,11 @@ export const PageWrapper = styled.div`
   }
 
   .form-wrapper {
-    margin: 40px;
-    width: 600px;
+    margin: 10px;
+    flex: 1;
     border-radius: 4px;
     padding: 40px 20px;
+    background-color: #fff;
 
     .ant-table-cell {
       .ant-form-item {
@@ -32,14 +33,14 @@ export const PageWrapper = styled.div`
 
   .code-wrapper {
     flex: 1;
-    margin: 40px;
+    margin: 10px;
     display: flex;
     justify-content: stretch;
     align-items: stretch;
     border-radius: 4px;
     pre {
       border-radius: 4px;
-      background-color: lightgray;
+      background-color: #d8dded;
       padding: 16px;
       width: 100%;
       margin: 0;

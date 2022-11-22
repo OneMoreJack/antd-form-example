@@ -1,4 +1,3 @@
-import { Button, Form, FormProps } from "antd";
 import React from "react";
 import NestTable from "./NestTable";
 
@@ -9,11 +8,6 @@ type FormExampleProps = {
 };
 
 const FormExample: React.FC<FormExampleProps> = (props) => {
-  const onFinish: FormProps<FormData>["onFinish"] = (values) => {
-    console.log(values);
-    props.onValuesChange?.(values);
-  };
-
   return (
     <>
       <NestTable />
